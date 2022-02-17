@@ -14,8 +14,24 @@ mongoose
   });
 
 const personSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minLength: 3,
+    required: true,
+  },
+  number: {
+    type: String,
+    minLength: 8,
+    validate: {
+      validator: function (v) {
+        return /\d{2,3}-\d+/.test(v);
+      },
+      message: function (props) {
+        return `${props.path} should be in the format XX-YYYYYYYY or XXX-YYYYYYYY and of minimum 8 characters, got '${props.value}'`;
+      },
+    },
+    required: true,
+  },
 });
 
 personSchema.set('toJSON', {
