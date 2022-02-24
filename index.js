@@ -183,11 +183,11 @@ const errorHandler = (error, request, response, next) => {
   console.error(error.message);
 
   if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' });
+    response.status(400).send({ error: 'malformatted id' });
   } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message });
+    response.status(400).json({ error: error.message });
   } else {
-    return response.status(404).json({ error: `Information not found` });
+    response.status(404).json({ error: 'Information not found' });
   }
 
   next(error);
